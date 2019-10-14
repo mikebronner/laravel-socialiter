@@ -1,6 +1,4 @@
-# Sign In With Apple for Laravel
-
-![repository-open-graph-template](https://user-images.githubusercontent.com/1791050/66706715-21cc0800-eceb-11e9-90b4-0a6ae3dd97b7.png)
+# Socialiter for Laravel
 
 ## Supporting This Package
 
@@ -9,10 +7,7 @@ This is an MIT-licensed open source project with its ongoing development made po
 ## Table of Contents
 - [Requirements](#Requirements)
 - [Installation](#Installation)
-- [Configuration](#Configuration)
 - [Implementation](#Implementation)
-  - [Button](#Button)
-  - [Controller](#Controller)
 
 <a name="Requirements"></a>
 ## Requirements
@@ -20,17 +15,16 @@ This is an MIT-licensed open source project with its ongoing development made po
 - PHP 7.2+
 - Laravel 6.2+
 - Socialite 4.2+
-- Apple Developer Subscription
 
 <a name="Installation"></a>
 ## Installation
 
 1. Install the composer package:
     ```sh
-    composer require genealabs/laravel-sign-in-with-apple
+    composer require genealabs/laravel-socialiter
     ```
 
-2. Update the user table with the unique SIWA user identifyer:
+2. Add the social credentials table:
     ```sh
     php artisan migrate
     ```
@@ -42,7 +36,7 @@ This is an MIT-licensed open source project with its ongoing development made po
 
     namespace App\Providers;
 
-    use GeneaLabs\LaravelSignInWithApple\Providers\SignInWithAppleProvider;
+    use GeneaLabs\LaravelSocialiter\Socialiter;
     use Illuminate\Support\ServiceProvider;
 
     class AppServiceProvider extends ServiceProvider
@@ -54,7 +48,7 @@ This is an MIT-licensed open source project with its ongoing development made po
 
         public function boot()
         {
-            SignInWithAppleProvider::ignoreMigrations();
+            Socialiter::ignoreMigrations();
         }
     }
     ```
@@ -62,117 +56,14 @@ This is an MIT-licensed open source project with its ongoing development made po
     And then publish the migration files and manipulate them as needed:
 
     ```sh
-    pa vendor:publish --provider="GeneaLabs\LaravelSignInWithApple\Providers\ServiceProvider" --tag=migrations
-    ```
-
-<a name="Configuration"></a>
-## Configuration
-
-1. Create an `App ID` for your website (https://developer.apple.com/account/resources/identifiers/list/bundleId) with the following details:
-    - Platform: iOS, tvOS, watchOS (I'm unsure if either choice has an effect for web apps)
-    - Description: (something like "example.com app id")
-    - Bundle ID (Explicit): com.example.id (or something similar)
-    - Check "Sign In With Apple"
-2. Create a `Service ID` for your website (https://developer.apple.com/account/resources/identifiers/list/serviceId) with the following details:
-    - Description: (something like "example.com service id")
-    - Identifier: com.example.service (or something similar)
-    - Check "Sign In With Apple"
-    - Configure "Sign In With Apple":
-        - Primary App Id: (select the primary app id created in step 1)
-        - Web Domain: example.com (the domain of your web site)
-        - Return URLs: https://example.com/apple-signin (the route pointing to the callback method in your controller)
-        - Click "Save".
-        - Click the "Edit" button to edit the details of the "Sign In With Apple"
-            configuration we just created.
-        - If you haven't verified the domain yet, download the verification file,
-            upload it to https://example.com/.well-known/apple-developer-domain-association.txt, and then click the "Verify"
-            button.
-3. Create a `Private Key` for your website (https://developer.apple.com/account/resources/authkeys/list) with the following details:
-    - Key Name: 
-    - Check "Sign In With Apple"
-    - Configure "Sign In With Apple":
-        - Primary App ID: (select the primary app id created in step 1)
-        - Click "Save"
-    - Click "Continue"
-    - Click "Register"
-    - Click "Download"
-    - Rename the downloaded file to `key.txt`
-4. Create your app's client secret:
-    - Install the JWT Gem:
-        ```sh
-        sudo gem install jwt
-        ```
-    
-    - Create a temporary file to process the private key:
-        ```ruby
-        require 'jwt'
-
-        key_file = 'key.txt'
-        team_id = ''
-        client_id = ''
-        key_id = ''
-
-        ecdsa_key = OpenSSL::PKey::EC.new IO.read key_file
-
-        headers = {
-        'kid' => key_id
-        }
-
-        claims = {
-            'iss' => team_id,
-            'iat' => Time.now.to_i,
-            'exp' => Time.now.to_i + 86400*180,
-            'aud' => 'https://appleid.apple.com',
-            'sub' => client_id,
-        }
-
-        token = JWT.encode claims, ecdsa_key, 'ES256', headers
-
-        puts token
-        ```
-
-    - Fill in the following fields:
-        - `team_id`: This can be found on the top-right corner when logged into
-            your Apple Developer account, right under your name.
-        - `client_id`: This is the identifier from the Service Id created in step
-            2 above, for example com.example.service
-        - `key_id`: This is the identifier of the private key created in step 3
-            above.
-    - Save the file and run it from the terminal. It will spit out a JWT which is
-        your client secret, which you will need to add to your `.env` file in the
-        next step.
-5. Set the necessary environment variables in your `.env` file:
-
-    ```env
-    SIGN_IN_WITH_APPLE_LOGIN="/apple/login/controller/login/action"
-    SIGN_IN_WITH_APPLE_REDIRECT="/apple/login/controller/callback/action"
-    SIGN_IN_WITH_APPLE_CLIENT_ID="your app's service id as registered with Apple"
-    SIGN_IN_WITH_APPLE_CLIENT_SECRET="your app's client secret as calculated in step 4"
+    pa vendor:publish --provider="GeneaLabs\LaravelSocialiter\Providers\ServiceProvider" --tag=migrations
     ```
 
 <a name="Implementation"></a>
 ## Implementation
 
-<a name="LoginButton"></a>
-### Button
-
-Add the following blade directive to your login page:
-
-```php
-@signInWithApple($color, $hasBorder, $type, $borderRadius)
-```
-
-| Parameter | Definition |
-| --------- | ---------- |
-| $color    | String, either "black" or "white. |
-| $hasBorder | Boolean, either `true` or `false`. |
-| $type      | String, either `"sign-in"` or `"continue"`. |
-| $borderRadius | Integer, greater or equal to 0. |
-
-<a name="Controller"></a>
-### Controller
-
-This implementation uses Socialite to get the login credentials. The following is an example implementation of the controller:
+The following is an example controller implementation using the "Sign in with
+    Apple" driver:
 
 ```php
 <?php
@@ -180,47 +71,38 @@ This implementation uses Socialite to get the login credentials. The following i
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use GeneaLabs\LaravelSocialiter\Socialiter;
+use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 
-class AppleSigninController extends Controller
+class SignInWithAppleController extends Controller
 {
-    public function __construct()
+    public function redirectToProvider() : RedirectResponse
     {
-        $this->middleware('guest')->except('logout');
-    }
-
-    public function login()
-    {
+        // use Socialite, as before
         return Socialite::driver("sign-in-with-apple")
             ->scopes(["name", "email"])
             ->redirect();
     }
 
-    public function callback(Request $request)
+    public function handleProviderCallback()
     {
-        // get abstract user object, not persisted
-        $user = Socialite::driver("sign-in-with-apple")
-            ->user();
+        // but handle the callback using Socialiter
+        $user = (new Socialiter)
+            ->driver("sign-in-with-apple")
+            ->login();
 
-        // or, if you don't need to do anything out of the ordinary:
+        // or you can use the facade:
+        $user = Socialiter::driver("sign-in-with-apple")
+            ->login();
 
-        // resolve the user, save with details, log them in, and return
-        // the user object, along with data points returned from SIWA,
-        // which aren't persisted. The user will, of course, be available
-        // via `auth()->user()` as well.
-        $user = Socialite::driver("sign-in-with-apple")
+        // or you can use the app binding:
+        $user = app("socialiter")
+            ->driver("sign-in-with-apple")
             ->login();
     }
 }
 ```
-
-Note that when processing the returned `$user` object, it is critical to know that the `sub` element is the unique identifier for the user, **NOT** the email address. For more details, visit https://developer.apple.com/documentation/signinwithapplerestapi/authenticating_users_with_sign_in_with_apple.
-
-----------
-
-#### Credits
-1. https://developer.okta.com/blog/2019/06/04/what-the-heck-is-sign-in-with-apple
-2. https://developer.apple.com/sign-in-with-apple/get-started
 
 ----------
 
