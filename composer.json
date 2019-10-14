@@ -1,0 +1,39 @@
+{
+    "name": "genealabs/laravel-socialiter",
+    "description": "Automatically manager user persistence and resolution for any Laravel Socialite provider.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Bronner",
+            "email": "hello@genealabs.com"
+        }
+    ],
+    "require": {
+        "illuminate/auth": "^6.2",
+        "illuminate/database": "^6.2",
+        "illuminate/support": "^6.2",
+        "laravel/socialite": "^4.2"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5",
+        "phpmd/phpmd": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "GeneaLabs\\LaravelSocialiter\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\GeneaLabs\\LaravelSocialiter\\Providers\\ServiceProvider"
+            ],
+            "aliases": {
+                "Socialiter": "\\GeneaLabs\\LaravelSocialiter\\Facades\\Socialiter"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
