@@ -3,44 +3,34 @@
 namespace GeneaLabs\LaravelSocialiter;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Facades\Socialite;
-use Laravel\Socialite\Two\User;
 
 class Socialiter
 {
     public static $runsMigrations = true;
+
+    protected $driver;
 
     public static function ignoreMigrations()
     {
         static::$runsMigrations = false;
     }
 
-    public function authenticate(
-        string $driver,
-        array $scopes = [],
-        bool $isStateless = false,
-        array $parameters = []
-    ) : RedirectResponse {
-        $socialite = Socialite::driver($driver);
+    public function driver(string $driver) : self
+    {
+        $this->driver = $driver;
 
-        if ($isStateless) {
-            $socialite = $socialite->stateless();
-        }
-        
-        return $socialite->scopes($scopes)
-            ->with($parameters)
-            ->redirect();
+        return $this;
     }
 
-    public function login(string $driver) : Model
+    public function login() : Model
     {
-        $socialiteUser = Socialite::driver($driver)
+        $socialiteUser = Socialite::driver($this->driver)
             ->user();
-        $user = $this->getUser($socialiteUser, $driver);
+        $user = $this->getUser($socialiteUser, $this->driver);
         $user->load("socialCredentials");
 
         auth()->login($user);
@@ -48,16 +38,11 @@ class Socialiter
         return $user;
     }
 
-    protected function getUser(AbstractUser $socialiteUser, string $driver) : Model
+    protected function getUser(AbstractUser $socialiteUser) : Model
     {
-        dump($socialiteUser->refreshToken, $socialiteUser);
-
-        $socialiteCredentials = $this->createCredentials(
-            $socialiteUser,
-            $driver
-        );
-
-        return $socialiteCredentials->user;
+        return $this
+            ->createCredentials($socialiteUser)
+            ->user;
     }
 
     protected function createUser(AbstractUser $socialiteUser) : Model
@@ -74,16 +59,13 @@ class Socialiter
         return $user;
     }
 
-    protected function createCredentials(
-        AbstractUser $socialiteUser,
-        string $driver
-    ) : SocialCredentials {
-        dump($socialiteUser->refreshToken);
+    protected function createCredentials(AbstractUser $socialiteUser) : SocialCredentials
+    {
         $socialiteCredentials = (new SocialCredentials)
             ->with("user")
             ->firstOrNew([
                 "provider_id" => $socialiteUser->getId(),
-                "provider_name" => $driver,
+                "provider_name" => $this->driver,
             ])
             ->fill([
                 "access_token" => $socialiteUser->token,
@@ -93,7 +75,7 @@ class Socialiter
                 "name" => $socialiteUser->getName(),
                 "nickname" => $socialiteUser->getNickname(),
                 "provider_id" => $socialiteUser->getId(),
-                "provider_name" => $driver,
+                "provider_name" => $this->driver,
                 "refresh_token" => $socialiteUser->refreshToken,
             ]);
 
