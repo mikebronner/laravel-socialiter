@@ -1,5 +1,7 @@
 # Socialiter for Laravel
 
+![socialiter-masthead](https://user-images.githubusercontent.com/1791050/66761837-a9378980-ee59-11e9-9ddf-0293e0eb344b.png)
+
 ## Supporting This Package
 
 This is an MIT-licensed open source project with its ongoing development made possible by the support of the community. If you'd like to support this, and our other packages, please consider sponsoring us via the button above.
