@@ -13,6 +13,7 @@ class Socialiter
     public static $runsMigrations = true;
 
     protected $driver;
+    protected $apitoken;
 
     public static function ignoreMigrations()
     {
@@ -34,7 +35,18 @@ class Socialiter
         $user->load("socialCredentials");
 
         auth()->login($user);
-    
+
+        return $user;
+    }
+    public function apilogin($socialiteUser, $apitoken ) : Model
+    {
+        $this -> $apitoken = $apitoken;
+        $user = $this->getUser($socialiteUser, $this->driver);
+        $user->load("socialCredentials");
+
+
+        auth()->login($user);
+
         return $user;
     }
 
@@ -49,9 +61,12 @@ class Socialiter
     {
         $userClass = config("auth.providers.users.model");
         $user = (new $userClass)
+            ->firstOrNew([
+                "email" => $socialiteUser->getEmail(),
+                "api_token" => $this->apitoken
+            ])
             ->fill([
                 "name" => $socialiteUser->getName(),
-                "email" => $socialiteUser->getEmail(),
                 "password" => Str::random(64),
             ]);
         $user->save();
