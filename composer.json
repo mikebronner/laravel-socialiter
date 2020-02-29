@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "illuminate/auth": "^6.2",
-        "illuminate/database": "^6.2",
-        "illuminate/support": "^6.2",
+        "illuminate/auth": "^7.0",
+        "illuminate/database": "^7.0",
+        "illuminate/support": "^7.0",
         "laravel/socialite": "^4.2"
     },
     "require-dev": {
