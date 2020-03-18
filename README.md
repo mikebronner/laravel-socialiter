@@ -15,7 +15,7 @@ This is an MIT-licensed open source project with its ongoing development made po
 ## Requirements
 
 - PHP 7.2+
-- Laravel 6.2+
+- Laravel 7.x
 - Socialite 4.2+
 
 <a name="Installation"></a>
