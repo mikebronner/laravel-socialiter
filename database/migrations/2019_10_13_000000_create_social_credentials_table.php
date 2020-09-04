@@ -12,7 +12,7 @@ class CreateSocialCredentialsTable extends Migration
             $table->bigInteger("user_id");
             $table->timestamps();
 
-            $table->string("access_token")->nullable();
+            $table->text("access_token")->nullable();
             $table->string("avatar")->nullable();
             $table->string("email")->nullable();
             $table->string("expires_at")->nullable();
