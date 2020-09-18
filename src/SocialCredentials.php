@@ -2,11 +2,14 @@
 
 namespace GeneaLabs\LaravelSocialiter;
 
+use GeneaLabs\LaravelOverridableModel\Traits\Overridable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SocialCredentials extends Model
 {
+    use Overridable;
+
     protected $dates = [
         "expires_at",
     ];

@@ -79,7 +79,8 @@ class Socialiter
 
     protected function createCredentials(AbstractUser $socialiteUser) : SocialCredentials
     {
-        $socialiteCredentials = (new SocialCredentials)
+        $credentialsModel = SocialCredentials::model();
+        $socialiteCredentials = (new $credentialsModel)
             ->with("user")
             ->firstOrNew([
                 "provider_id" => $socialiteUser->getId(),
