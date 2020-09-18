@@ -13,7 +13,7 @@
         "illuminate/auth": "^8.0",
         "illuminate/database": "^8.0",
         "illuminate/support": "^8.0",
-        "laravel/socialite": "^5.0",
+         "laravel/socialite": "^5.0",
         "genealabs/laravel-overridable-model": "0.1.0"
     },
     "autoload": {
