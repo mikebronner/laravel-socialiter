@@ -77,7 +77,7 @@ class Socialiter
         $userClass = config("auth.providers.users.model");
 
         return (new $userClass)
-            ->createOrUpdate([
+            ->updateOrCreate([
                 "email" => $socialiteUser->getEmail(),
             ], [
                 "name" => $socialiteUser->getName(),
