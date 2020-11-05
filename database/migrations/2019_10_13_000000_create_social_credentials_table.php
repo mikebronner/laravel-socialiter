@@ -5,10 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateSocialCredentialsTable extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('social_credentials', function (Blueprint $table) {
-            $table->bigIncrements("id");
+            $table->id("id");
             $table->bigInteger("user_id");
             $table->timestamps();
 
@@ -24,7 +24,7 @@ class CreateSocialCredentialsTable extends Migration
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::drop('social_credentials');
     }
