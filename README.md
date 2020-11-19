@@ -22,44 +22,44 @@ This is an MIT-licensed open source project with its ongoing development made po
 ## Installation
 
 1. Install the composer package:
-    ```sh
-    composer require genealabs/laravel-socialiter
-    ```
+```sh
+composer require genealabs/laravel-socialiter
+```
 
 2. Add the social credentials table:
-    ```sh
-    php artisan migrate
-    ```
+```sh
+php artisan migrate
+```
 
-    To prevent automatic migrations from running (for example if you have a different migration setup, like multi-tenancy, etc.), add the following entry to your app's service provider:
+To prevent automatic migrations from running (for example if you have a different migration setup, like multi-tenancy, etc.), add the following entry to your app's service provider:
 
-    ```php
-    <?php
+```php
+<?php
 
-    namespace App\Providers;
+namespace App\Providers;
 
-    use GeneaLabs\LaravelSocialiter\Socialiter;
-    use Illuminate\Support\ServiceProvider;
+use GeneaLabs\LaravelSocialiter\Socialiter;
+use Illuminate\Support\ServiceProvider;
 
-    class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
     {
-        public function register()
-        {
-            //
-        }
-
-        public function boot()
-        {
-            Socialiter::ignoreMigrations();
-        }
+        //
     }
-    ```
 
-    And then publish the migration files and manipulate them as needed:
+    public function boot()
+    {
+        Socialiter::ignoreMigrations();
+    }
+}
+```
 
-    ```sh
-    php artisan vendor:publish --provider="GeneaLabs\LaravelSocialiter\Providers\ServiceProvider" --tag=migrations
-    ```
+And then publish the migration files and manipulate them as needed:
+
+```sh
+php artisan vendor:publish --provider="GeneaLabs\LaravelSocialiter\Providers\ServiceProvider" --tag=migrations
+```
 
 <a name="Implementation"></a>
 ## Implementation
