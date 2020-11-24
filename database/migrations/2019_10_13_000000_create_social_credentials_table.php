@@ -20,7 +20,7 @@ class CreateSocialCredentialsTable extends Migration
             $table->string("nickname")->nullable();
             $table->string("provider_id")->nullable();
             $table->string("provider_name")->nullable();
-            $table->string("refresh_token")->nullable();
+            $table->text("refresh_token")->nullable();
         });
     }
 
