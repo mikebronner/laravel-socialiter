@@ -11,7 +11,7 @@ class ServiceProvider extends LaravelServiceProvider
 
     public function boot()
     {
-        if (Socialiter::$runsMigrations()) {
+        if (Socialiter::$runsMigrations) {
             $this->loadMigrationsFrom(__DIR__ . "/../../database/migrations");
         }
 
