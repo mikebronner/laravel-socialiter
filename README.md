@@ -58,7 +58,7 @@ This is an MIT-licensed open source project with its ongoing development made po
     And then publish the migration files and manipulate them as needed:
 
     ```sh
-    pa vendor:publish --provider="GeneaLabs\LaravelSocialiter\Providers\ServiceProvider" --tag=migrations
+    php artisan vendor:publish --provider="GeneaLabs\LaravelSocialiter\Providers\ServiceProvider" --tag=migrations
     ```
 
 <a name="Implementation"></a>
