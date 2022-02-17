@@ -6,6 +6,10 @@
 
 This is an MIT-licensed open source project with its ongoing development made possible by the support of the community. If you'd like to support this, and our other packages, please consider sponsoring us via the button above.
 
+We thank the following sponsors for their generosity, please take a moment to check them out:
+
+- [LIX](https://lix-it.com)
+
 ## Table of Contents
 
 -   [Requirements](#Requirements)
@@ -68,16 +72,16 @@ This is an MIT-licensed open source project with its ongoing development made po
 
 3. Update the user model:
 
-```
-use GeneaLabs\LaravelSocialiter\Traits\SocialCredentials;
-
-class User extends Authenticatable {
-
-    use SocialCredentials;
-
-    ...
-}
-```
+    ```
+    use GeneaLabs\LaravelSocialiter\Traits\SocialCredentials;
+    
+    class User extends Authenticatable {
+    
+        use SocialCredentials;
+    
+        ...
+    }
+    ```
 
 <a name="Implementation"></a>
 
