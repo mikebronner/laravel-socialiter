@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "illuminate/auth": "^9.0",
-        "illuminate/database": "^9.0",
-        "illuminate/support": "^9.0",
+        "illuminate/auth": "^10.0",
+        "illuminate/database": "^10.0",
+        "illuminate/support": "^10.0",
         "laravel/socialite": "^5.3",
-        "genealabs/laravel-overridable-model": "^0.2.0"
+        "genealabs/laravel-overridable-model": "^10.0"
     },
     "autoload": {
         "psr-4": {
