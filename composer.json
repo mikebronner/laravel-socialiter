@@ -1,6 +1,6 @@
 {
     "name": "genealabs/laravel-socialiter",
-    "description": "Automatically manager user persistence and resolution for any Laravel Socialite provider.",
+    "description": "Automatically manage user persistence and resolution for any Laravel Socialite provider.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,11 +10,11 @@
         }
     ],
     "require": {
-        "illuminate/auth": "^10.0",
-        "illuminate/database": "^10.0",
-        "illuminate/support": "^10.0",
+        "illuminate/auth": "^10.0|^11.0|^12.0",
+        "illuminate/database": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0",
         "laravel/socialite": "^5.3",
-        "genealabs/laravel-overridable-model": "^10.0"
+        "genealabs/laravel-overridable-model": "^10.0|^11.0|^12.0"
     },
     "autoload": {
         "psr-4": {
@@ -24,10 +24,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "\\GeneaLabs\\LaravelSocialiter\\Providers\\ServiceProvider"
+                "GeneaLabs\\LaravelSocialiter\\Providers\\ServiceProvider"
             ],
             "aliases": {
-                "Socialiter": "\\GeneaLabs\\LaravelSocialiter\\Facades\\Socialiter"
+                "Socialiter": "GeneaLabs\\LaravelSocialiter\\Facades\\Socialiter"
             }
         }
     },
