@@ -10,9 +10,6 @@ class SocialCredentials extends Model
 {
     use Overridable;
 
-    protected $casts = [
-        "expires_at" => "datetime",
-    ];
     protected $fillable = [
         "access_token",
         "avatar",
@@ -25,6 +22,13 @@ class SocialCredentials extends Model
         "refresh_token",
         "user_id",
     ];
+
+    protected function casts(): array
+    {
+        return [
+            "expires_at" => "datetime",
+        ];
+    }
 
     public function user() : BelongsTo
     {
