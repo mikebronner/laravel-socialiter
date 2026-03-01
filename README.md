@@ -20,9 +20,15 @@ We thank the following sponsors for their generosity, please take a moment to ch
 
 ## Requirements
 
--   PHP 7.2+
--   Laravel 7.x
--   Socialite 4.2+
+-   PHP 8.2+
+-   Laravel 10.x–13.x
+-   Socialite 5.3+
+
+### Version Support
+
+| Package Version | Laravel | PHP   |
+|----------------|---------|-------|
+| current        | 10–13   | 8.2+  |
 
 <a name="Installation"></a>
 
