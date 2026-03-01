@@ -10,8 +10,8 @@ class SocialCredentials extends Model
 {
     use Overridable;
 
-    protected $dates = [
-        "expires_at",
+    protected $casts = [
+        "expires_at" => "datetime",
     ];
     protected $fillable = [
         "access_token",
