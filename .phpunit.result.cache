@@ -1,0 +1,1 @@
+{"version":2,"defects":[],"times":{"GeneaLabs\\LaravelSocialiter\\Tests\\ServiceProviderTest::test_service_provider_boots_without_error":0.017,"GeneaLabs\\LaravelSocialiter\\Tests\\ServiceProviderTest::test_socialiter_facade_is_bound":0}}
