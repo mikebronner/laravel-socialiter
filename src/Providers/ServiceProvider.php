@@ -7,43 +7,26 @@ use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
 class ServiceProvider extends LaravelServiceProvider
 {
-    protected $defer = false;
-
-    public function boot()
+    public function boot(): void
     {
         if (Socialiter::$runsMigrations) {
-            $this->loadMigrationsFrom(__DIR__ . "/../../database/migrations");
+            $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
         }
 
-        $this->publishes(
-            [
-                __DIR__ . '/../../database/migrations/' => database_path('migrations')
-            ],
-            'migrations'
-        );
+        $this->publishes([
+            __DIR__ . '/../../database/migrations/' => database_path('migrations'),
+        ], 'socialiter-migrations');
     }
 
-    public function register()
+    public function register(): void
     {
-        // $this->registerConfiguration();
         $this->registerFacade();
     }
 
-    protected function registerFacade()
+    protected function registerFacade(): void
     {
-        $this->app->bind(
-            'socialiter',
-            function () {
-                return new Socialiter;
-            }
-        );
+        $this->app->bind('socialiter', function () {
+            return new Socialiter;
+        });
     }
-
-    // protected function registerConfiguration()
-    // {
-    //     $this->mergeConfigFrom(
-    //         __DIR__ . '/../../config/services.php',
-    //         'services'
-    //     );
-    // }
 }
