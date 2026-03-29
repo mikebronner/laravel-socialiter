@@ -75,14 +75,19 @@ class Socialiter
     protected function createUser(AbstractUser $socialiteUser): Model
     {
         $userClass = config("auth.providers.users.model");
+        $user = (new $userClass)
+            ->where("email", $socialiteUser->getEmail())
+            ->first();
 
-        return (new $userClass)
-            ->updateOrCreate([
-                "email" => $socialiteUser->getEmail(),
-            ], [
-                "name" => $socialiteUser->getName(),
-                "password" => Str::random(64),
-            ]);
+        if ($user) {
+            return $user;
+        }
+
+        return (new $userClass)->create([
+            "email" => $socialiteUser->getEmail(),
+            "name" => $socialiteUser->getName(),
+            "password" => Str::random(64),
+        ]);
     }
 
     protected function createCredentials(AbstractUser $socialiteUser): SocialCredentials
