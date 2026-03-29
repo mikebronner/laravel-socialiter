@@ -10,15 +10,25 @@
         }
     ],
     "require": {
+        "php": "^8.2",
         "illuminate/auth": "^10.0|^11.0|^12.0",
         "illuminate/database": "^10.0|^11.0|^12.0",
         "illuminate/support": "^10.0|^11.0|^12.0",
         "laravel/socialite": "^5.3",
         "genealabs/laravel-overridable-model": "^10.0|^11.0|^12.0"
     },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "pestphp/pest": "^2.0|^3.0"
+    },
     "autoload": {
         "psr-4": {
             "GeneaLabs\\LaravelSocialiter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "GeneaLabs\\LaravelSocialiter\\Tests\\": "tests/"
         }
     },
     "extra": {
@@ -30,6 +40,15 @@
                 "Socialiter": "GeneaLabs\\LaravelSocialiter\\Facades\\Socialiter"
             }
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "symfony/thanks": false
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
