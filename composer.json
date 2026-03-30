@@ -51,10 +51,5 @@
         "test": "vendor/bin/pest"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "config": {
-        "allow-plugins": {
-            "symfony/thanks": true
-        }
-    }
+    "prefer-stable": true
 }
