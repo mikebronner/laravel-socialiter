@@ -12,7 +12,6 @@ class Socialiter
 {
     public static $runsMigrations = true;
 
-    /** @var callable|null */
     protected static $userCreator = null;
 
     protected $isStateless = false;
@@ -25,22 +24,11 @@ class Socialiter
         static::$runsMigrations = false;
     }
 
-    /**
-     * Register a custom user-creation callback.
-     *
-     * The callback receives the Socialite user and should return an
-     * Eloquent User model instance (persisted).
-     *
-     * @param  callable(AbstractUser): Model  $callback
-     */
     public static function createUsersUsing(callable $callback): void
     {
         static::$userCreator = $callback;
     }
 
-    /**
-     * Reset the custom user-creation callback to the default behavior.
-     */
     public static function createUsersUsingDefault(): void
     {
         static::$userCreator = null;
@@ -108,7 +96,13 @@ class Socialiter
         }
 
         if (static::$userCreator) {
-            return call_user_func(static::$userCreator, $socialiteUser);
+            $user = call_user_func(static::$userCreator, $socialiteUser);
+
+            if (! $user instanceof Model || ! $user->exists) {
+                throw new \RuntimeException('The custom user creator must return a persisted User model.');
+            }
+
+            return $user;
         }
 
         return (new $userClass)->create([

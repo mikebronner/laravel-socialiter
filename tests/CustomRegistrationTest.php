@@ -18,6 +18,10 @@ beforeEach(function () {
     }
 });
 
+afterEach(function () {
+    Socialiter::createUsersUsingDefault();
+});
+
 function makeCustomSocialiteUser(array $overrides = []): SocialiteUser
 {
     $user = new SocialiteUser;
