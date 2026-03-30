@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneaLabs\LaravelSocialiter\Traits;
 
 use GeneaLabs\LaravelSocialiter\SocialCredentials as GeneaLabsSocialCredentials;

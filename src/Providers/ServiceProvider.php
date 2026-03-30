@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneaLabs\LaravelSocialiter\Providers;
 
 use GeneaLabs\LaravelSocialiter\Socialiter;
@@ -25,8 +27,9 @@ class ServiceProvider extends LaravelServiceProvider
 
     protected function registerFacade(): void
     {
-        $this->app->bind('socialiter', function () {
-            return new Socialiter;
-        });
+        $this->app
+            ->bind('socialiter', function (): Socialiter {
+                return new Socialiter;
+            });
     }
 }
