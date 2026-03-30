@@ -113,8 +113,7 @@ it('authenticates normally for users with existing social credential', function 
         'password' => Hash::make('password'),
     ]);
 
-    $credentialModel = SocialCredentials::model();
-    (new $credentialModel)->create([
+    SocialCredentials::create([
         'user_id' => $user->id,
         'provider_id' => 'provider-789',
         'provider_name' => 'google',
