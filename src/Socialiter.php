@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneaLabs\LaravelSocialiter;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Laravel\Socialite\AbstractUser;
 use Laravel\Socialite\Facades\Socialite;
@@ -46,8 +49,7 @@ class Socialiter
         $socialite = Socialite::driver($this->driver);
 
         if ($this->config) {
-            $socialite = $socialite
-                ->setConfig($this->config);
+            $socialite = $socialite->setConfig($this->config);
         }
 
         if ($this->isStateless) {
@@ -72,7 +74,7 @@ class Socialiter
             ->getUser($socialiteUser, $this->driver);
         $user->load("socialCredentials");
 
-        auth()->login($user);
+        Auth::login($user);
 
         return $user;
     }

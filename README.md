@@ -21,7 +21,7 @@ We thank the following sponsors for their generosity, please take a moment to ch
 ## Requirements
 
 -   PHP 8.2, 8.3, 8.4, 8.5
--   Laravel 10.x, 11.x, 12.x
+-   Laravel 11.x, 12.x, 13.x
 -   Socialite 5.3+
 
 <a name="Installation"></a>

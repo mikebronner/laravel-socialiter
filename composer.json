@@ -11,14 +11,14 @@
     ],
     "require": {
         "php": "^8.2",
-        "illuminate/auth": "^10.0|^11.0|^12.0",
-        "illuminate/database": "^10.0|^11.0|^12.0",
-        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/auth": "^11.0|^12.0|^13.0",
+        "illuminate/database": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0",
         "laravel/socialite": "^5.3"
     },
     "require-dev": {
-        "orchestra/testbench": "^8.0|^9.0|^10.0",
-        "phpunit/phpunit": "^10.0|^11.0",
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
+        "phpunit/phpunit": "^10.0|^11.0|^12.5",
         "pestphp/pest": "^2.0|^3.0|^4.0"
     },
     "autoload": {
@@ -43,8 +43,8 @@
     },
     "config": {
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
-            "symfony/thanks": true
+            "symfony/thanks": true,
+            "pestphp/pest-plugin": true
         }
     },
     "scripts": {

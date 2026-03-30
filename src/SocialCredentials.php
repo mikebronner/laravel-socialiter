@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GeneaLabs\LaravelSocialiter;
 
 use Illuminate\Database\Eloquent\Model;
@@ -7,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SocialCredentials extends Model
 {
-
     protected $fillable = [
         "access_token",
         "avatar",
@@ -28,10 +29,8 @@ class SocialCredentials extends Model
         ];
     }
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
-        $userClass = config("auth.providers.users.model");
-
-        return $this->belongsTo($userClass);
+        return $this->belongsTo(config("auth.providers.users.model"));
     }
 }
