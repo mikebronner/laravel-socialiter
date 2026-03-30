@@ -2,17 +2,12 @@
 
 namespace GeneaLabs\LaravelSocialiter;
 
-use GeneaLabs\LaravelOverridableModel\Traits\Overridable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SocialCredentials extends Model
 {
-    use Overridable;
 
-    protected $dates = [
-        "expires_at",
-    ];
     protected $fillable = [
         "access_token",
         "avatar",
@@ -25,6 +20,13 @@ class SocialCredentials extends Model
         "refresh_token",
         "user_id",
     ];
+
+    protected function casts(): array
+    {
+        return [
+            "expires_at" => "datetime",
+        ];
+    }
 
     public function user() : BelongsTo
     {
