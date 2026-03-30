@@ -83,6 +83,46 @@ We thank the following sponsors for their generosity, please take a moment to ch
     }
     ```
 
+<a name="CustomRegistration"></a>
+
+## Custom Registration
+
+By default, Socialiter creates new users with just their `name`, `email`, and a
+random password. If you need to customize how users are created (for example, to
+set additional attributes or use a custom creation flow), register a callback in
+your `AppServiceProvider`:
+
+```php
+use GeneaLabs\LaravelSocialiter\Socialiter;
+use Laravel\Socialite\Contracts\User as SocialiteUser;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        Socialiter::createUsersUsing(function (SocialiteUser $socialiteUser) {
+            return \App\Models\User::create([
+                'name' => $socialiteUser->getName(),
+                'email' => $socialiteUser->getEmail(),
+                'password' => \Illuminate\Support\Str::random(64),
+                'avatar' => $socialiteUser->getAvatar(),
+                'locale' => 'en',
+                // ... any additional attributes
+            ]);
+        });
+    }
+}
+```
+
+The callback receives the raw Socialite user object and must return a persisted
+`User` model instance. If no callback is registered, the default behavior is
+used. You can reset to default at any time with
+`Socialiter::createUsersUsingDefault()`.
+
+> **Note:** The custom callback is only invoked when creating a *new* user. If
+> an existing user with the same email is found, Socialiter links the social
+> credentials to that user without invoking the callback.
+
 <a name="Implementation"></a>
 
 ## Implementation

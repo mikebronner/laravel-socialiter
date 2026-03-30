@@ -12,6 +12,8 @@ class Socialiter
 {
     public static $runsMigrations = true;
 
+    protected static $userCreator = null;
+
     protected $isStateless = false;
     protected $config;
     protected $driver;
@@ -20,6 +22,16 @@ class Socialiter
     public static function ignoreMigrations(): void
     {
         static::$runsMigrations = false;
+    }
+
+    public static function createUsersUsing(callable $callback): void
+    {
+        static::$userCreator = $callback;
+    }
+
+    public static function createUsersUsingDefault(): void
+    {
+        static::$userCreator = null;
     }
 
     public function driver(string $driver): self
@@ -80,6 +92,16 @@ class Socialiter
             ->first();
 
         if ($user) {
+            return $user;
+        }
+
+        if (static::$userCreator) {
+            $user = call_user_func(static::$userCreator, $socialiteUser);
+
+            if (! $user instanceof Model || ! $user->exists) {
+                throw new \RuntimeException('The custom user creator must return a persisted User model.');
+            }
+
             return $user;
         }
 
