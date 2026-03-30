@@ -12,6 +12,9 @@ class Socialiter
 {
     public static $runsMigrations = true;
 
+    /** @var callable|null */
+    protected static $userCreator = null;
+
     protected $isStateless = false;
     protected $config;
     protected $driver;
@@ -20,6 +23,27 @@ class Socialiter
     public static function ignoreMigrations(): void
     {
         static::$runsMigrations = false;
+    }
+
+    /**
+     * Register a custom user-creation callback.
+     *
+     * The callback receives the Socialite user and should return an
+     * Eloquent User model instance (persisted).
+     *
+     * @param  callable(AbstractUser): Model  $callback
+     */
+    public static function createUsersUsing(callable $callback): void
+    {
+        static::$userCreator = $callback;
+    }
+
+    /**
+     * Reset the custom user-creation callback to the default behavior.
+     */
+    public static function createUsersUsingDefault(): void
+    {
+        static::$userCreator = null;
     }
 
     public function driver(string $driver): self
@@ -81,6 +105,10 @@ class Socialiter
 
         if ($user) {
             return $user;
+        }
+
+        if (static::$userCreator) {
+            return call_user_func(static::$userCreator, $socialiteUser);
         }
 
         return (new $userClass)->create([
